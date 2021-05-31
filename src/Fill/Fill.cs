@@ -39,9 +39,13 @@ namespace Fill {
         }
 
         private void filler(Point[,] data, int start_x, int start_y, int target_color, int replacement_color) {
-            var queue = new Queue<ValueTuple<bool, int, int>>();
             if (!inside(data, start_x, start_y, target_color, replacement_color)) {
                 return;
+            }
+            var queue = new Queue<QueuePoint>();
+            queue.Enqueue(new QueuePoint(State.Old, start_x, start_y));
+            while(queue.Count > 0) {
+                process_one_item(data, queue, target_color, replacement_color);
             }
         }
 
