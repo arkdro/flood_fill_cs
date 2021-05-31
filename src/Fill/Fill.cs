@@ -45,6 +45,22 @@ namespace Fill {
             }
         }
 
+        private void process_one_item(Point[,] data, Queue<QueuePoint> queue, int target_color, int replacement_color) {
+            var item = queue.Dequeue();
+            var left_x = item.x;
+            while(inside(data, left_x - 1, item.y, target_color, replacement_color)) {
+                set(data, left_x - 1, item.y, target_color, replacement_color);
+                left_x--;
+            }
+            var right_x = item.x;
+            while(inside(data, right_x, item.y, target_color, replacement_color)) {
+                set(data, right_x, item.y, target_color, replacement_color);
+                right_x++;
+            }
+            scan(data, left_x, right_x - 1, item.y + 1, queue, target_color, replacement_color);
+            scan(data, left_x, right_x - 1, item.y - 1, queue, target_color, replacement_color);
+        }
+
         private bool inside(Point[,] data, int x, int y, int target_color, int replacement_color) {
             var point = data[x, y];
             if (point.state == State.Old && point.color == target_color) {
