@@ -82,6 +82,10 @@ namespace Fill {
         }
 
         private void scan(Point[,] data, int left, int right, int y, Queue<QueuePoint> queue, int target_color, int replacement_color) {
+            int height = data.GetLength(0);
+            if (y < 0 || y >= height) {
+                return;
+            }
             bool added = false;
             for (int x = left; x <= right; x++) {
                 if(!inside(data, x, y, target_color, replacement_color)) {
