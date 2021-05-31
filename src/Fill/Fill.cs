@@ -19,6 +19,17 @@ namespace Fill {
         }
     }
 
+    internal readonly struct QueuePoint {
+        internal readonly State state;
+        internal readonly int x;
+        internal readonly int y;
+        internal QueuePoint(State state, int x, int y) {
+            this.state = state;
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     public class Fill {
         public int[,] fill(int[,] input, int start_x, int start_y, int target_color, int replacement_color) {
             var work = copy_input_data(input, target_color);
