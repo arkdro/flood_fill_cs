@@ -1,6 +1,7 @@
 using NUnit.Framework;
 
 using System;
+using System.Threading;
 
 using Fill;
 
@@ -145,14 +146,30 @@ namespace Fill.Test
         }
 
         [Test]
+        // it still results in System.OutOfMemoryException sometimes, but finishes OK.
         public void generate_random_data()
         {
-            int number_of_tests = 1000;
-            for (int i = 0; i < number_of_tests; i++)
-            {
-                do_one_random_data_test();
+            int number_of_packs = 25;
+            for (int i = 0; i < number_of_packs; i++) {
+                Console.Error.WriteLine($"generate_random_data, i = {i}");
+                do_bunch_random_data_test();
+                if(i > 0 && ((i % 10) == 0)) {
+                    Console.Error.WriteLine($"generate_random_data, sleeping, i = {i}");
+                    Thread.Sleep(5000);
+                }
             }
             Assert.Pass();
+        }
+
+        private void do_bunch_random_data_test() {
+            int number_of_tests = 100;
+            for (int i = 0; i < number_of_tests; i++) {
+                do_one_random_data_test();
+                if(i > 0 && i % 10 == 0) {
+                    Console.Error.WriteLine($"do_bunch_random_data_test, sleeping, i = {i}");
+                    Thread.Sleep(200);
+                }
+            }
         }
 
         private void do_one_random_data_test()
