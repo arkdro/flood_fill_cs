@@ -59,8 +59,8 @@ namespace Fill {
             Point[,] work = new Point[height, width];
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    var point = new Point(State.Old, input[x, y]);
-                    work[x, y] = point;
+                    var point = new Point(State.Old, input[y, x]);
+                    work[y, x] = point;
                 }
             }
             return work;
@@ -72,8 +72,8 @@ namespace Fill {
             int[,] work = new int[height, width];
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    var point = data[x, y];
-                    work[x, y] = point.color;
+                    var point = data[y, x];
+                    work[y, x] = point.color;
                 }
             }
             return work;
