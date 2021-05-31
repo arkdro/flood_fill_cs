@@ -53,7 +53,7 @@ namespace Fill {
             var item = queue.Dequeue();
             var left_x = item.x;
             var width = data.GetLength(1);
-            while(left_x >= 0 && inside(data, left_x - 1, item.y, target_color, replacement_color)) {
+            while(left_x > 0 && inside(data, left_x - 1, item.y, target_color, replacement_color)) {
                 set(data, left_x - 1, item.y, target_color, replacement_color);
                 left_x--;
             }
