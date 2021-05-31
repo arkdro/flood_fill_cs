@@ -24,13 +24,13 @@ namespace Fill.Test
         {
             var f = new Fill();
             var data = new int[,] {{11,12}, {11,14}, {11,11}, {17,11}};
-            var new_data = f.fill(data, 0, 1, 14, 21);
+            var new_data = f.fill(data, 1, 1, 14, 21);
             var expected = new int[,] {{11,12}, {11,21}, {11,11}, {17,11}};
             int height = data.GetLength(0);
             int width = data.GetLength(1);
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    Assert.AreEqual(expected[y, x], new_data[y, x]);
+                    Assert.AreEqual(expected[y, x], new_data[y, x], $"expected: {expected[y, x]}, actual: {new_data[y, x]}, x: {x}, y: {y}");
                 }
             }
         }
