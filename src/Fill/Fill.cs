@@ -52,11 +52,11 @@ namespace Fill {
         private void process_one_item(Point[,] data, Queue<QueuePoint> queue, int target_color, int replacement_color) {
             var item = queue.Dequeue();
             var left_x = item.x;
-            var width = data.GetLength(1);
             while(left_x > 0 && inside(data, left_x - 1, item.y, target_color, replacement_color)) {
                 set(data, left_x - 1, item.y, target_color, replacement_color);
                 left_x--;
             }
+            var width = data.GetLength(1);
             var right_x = item.x;
             while(right_x < width && inside(data, right_x, item.y, target_color, replacement_color)) {
                 set(data, right_x, item.y, target_color, replacement_color);
