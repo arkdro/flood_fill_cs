@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Fill.Test")]
 namespace Fill {
 
     internal enum State {
@@ -60,7 +62,7 @@ namespace Fill {
             return work;
         }
 
-        private int[,] extract_result(Point[,] data) {
+        internal int[,] extract_result(Point[,] data) {
             int height = data.GetLength(0);
             int width = data.GetLength(1);
             int[,] work = new int[height, width];
