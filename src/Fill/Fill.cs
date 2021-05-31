@@ -60,6 +60,18 @@ namespace Fill {
             data[x, y] = new_point;
         }
 
+        private void scan(Point[,] data, int left, int right, int y, Queue<QueuePoint> queue, int target_color, int replacement_color) {
+            bool added = false;
+            for (int x = left; x <= right; x++) {
+                if(!inside(data, x, y, target_color, replacement_color)) {
+                    added = false;
+                } else if (!added) {
+                    queue.Enqueue(new QueuePoint(State.Old, x, y));
+                    added = true;
+                }
+            }
+        }
+
         private Point[,] copy_input_data(int[,] input, int target_color) {
             int height = input.GetLength(0);
             int width = input.GetLength(1);
