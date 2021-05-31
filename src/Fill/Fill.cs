@@ -52,12 +52,13 @@ namespace Fill {
         private void process_one_item(Point[,] data, Queue<QueuePoint> queue, int target_color, int replacement_color) {
             var item = queue.Dequeue();
             var left_x = item.x;
-            while(inside(data, left_x - 1, item.y, target_color, replacement_color)) {
+            var width = data.GetLength(1);
+            while(left_x >= 0 && inside(data, left_x - 1, item.y, target_color, replacement_color)) {
                 set(data, left_x - 1, item.y, target_color, replacement_color);
                 left_x--;
             }
             var right_x = item.x;
-            while(inside(data, right_x, item.y, target_color, replacement_color)) {
+            while(right_x < width && inside(data, right_x, item.y, target_color, replacement_color)) {
                 set(data, right_x, item.y, target_color, replacement_color);
                 right_x++;
             }
@@ -66,7 +67,7 @@ namespace Fill {
         }
 
         private bool inside(Point[,] data, int x, int y, int target_color, int replacement_color) {
-            var point = data[x, y];
+            var point = data[y, x];
             if (point.state == State.Old && point.color == target_color) {
                 return true;
             } else {
@@ -75,9 +76,9 @@ namespace Fill {
         }
 
         private void set(Point[,] data, int x, int y, int target_color, int replacement_color) {
-            var point = data[x, y];
-            var new_point = new Point(State.New, point.color);
-            data[x, y] = new_point;
+            var point = data[y, x];
+            var new_point = new Point(State.New, replacement_color);
+            data[y, x] = new_point;
         }
 
         private void scan(Point[,] data, int left, int right, int y, Queue<QueuePoint> queue, int target_color, int replacement_color) {
