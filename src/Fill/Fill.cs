@@ -23,12 +23,6 @@ namespace Fill {
             filler(work, start_x, start_y, target_color, replacement_color);
             var result = extract_result(work);
             return result;
-            int height = input.GetLength(0);
-            int width = input.GetLength(1);
-            Console.WriteLine($"width: {width}, height: {height}");
-            int h2 = work.GetLength(0);
-            int w2 = work.GetLength(1);
-            Console.WriteLine($"w2: {w2}, h2: {h2}");
         }
 
         private void filler(Point[,] data, int start_x, int start_y, int target_color, int replacement_color) {
