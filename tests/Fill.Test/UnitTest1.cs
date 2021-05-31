@@ -143,5 +143,73 @@ namespace Fill.Test
                 }
             }
         }
+
+        [Test]
+        public void generate_random_data()
+        {
+            int number_of_tests = 1000;
+            for (int i = 0; i < number_of_tests; i++)
+            {
+                do_one_random_data_test();
+            }
+            Assert.Pass();
+        }
+
+        private void do_one_random_data_test()
+        {
+            int height_min = 3;
+            int height_max = 30;
+            int width_min = 3;
+            int width_max = 30;
+            int min_colors = 2;
+            int max_colors = 4;
+            double prob_of_main_color = 0.55;
+            var (area, main_color, initial_x, initial_y) = generate_area(height_min, height_max, width_min, width_max, min_colors, max_colors, prob_of_main_color);
+            fill_area(area, main_color, initial_x, initial_y);
+            // no exceptions means success
+        }
+
+        private void fill_area(int[,] data, int main_color, int start_x, int start_y) {
+            var f = new Fill();
+            int replacement_color = 127;
+            var new_data = f.fill(input: data, start_x: start_x, start_y: start_y, target_color: main_color, replacement_color: replacement_color);
+        }
+
+        private (int[,], int, int, int) generate_area(int height_min, int height_max, int width_min, int width_max, int min_colors, int max_colors, double prob_of_main_color) {
+            var rnd = new Random();
+            int width = rnd.Next(width_min, width_max + 1);
+            int height = rnd.Next(height_min, height_max + 1);
+            int colors = rnd.Next(min_colors, max_colors + 1);
+            int main_color = choose_main_color(rnd, colors);
+            int[,] data = new int[height, width];
+            int initial_x = 0;
+            int initial_y = 0;
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int color = get_random_color(main_color, rnd, colors, prob_of_main_color);
+                    data[y, x] = color;
+                    if(color == main_color) {
+                        initial_x = x;
+                        initial_y = y;
+                    }
+                }
+            }
+            return (data, main_color, initial_x, initial_y);
+        }
+
+        private int choose_main_color(Random rnd, int colors) {
+            int color = rnd.Next(0, colors);
+            return color;
+        }
+
+        private int get_random_color(int main_color, Random rnd, int colors, double prob_of_main_color) {
+            int color = rnd.Next(0, colors);
+            double prob = rnd.NextDouble();
+            if (prob < prob_of_main_color) {
+                return main_color;
+            } else {
+                return color;
+            }
+        }
     }
 }
